@@ -39,9 +39,15 @@ const resize = async () => {
       convert.outputs.map(async output => {
         await image
           .clone()
-          .jpeg(OPTIONS)
-          .resize(output.size)
-          .toFile(output.file)
+          .metadata()
+          .then(({ width, height }) =>
+            image.jpeg(OPTIONS)
+              .resize({
+                width: width > height ? output.size: undefined,
+                height: height > width ? output.size: undefined,
+              })
+              .toFile(output.file)
+          )
       })
     })
   } catch (error) {
