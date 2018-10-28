@@ -43,8 +43,8 @@ const resize = async () => {
           .then(({ width, height }) =>
             image.jpeg(OPTIONS)
               .resize({
-                width: width > height ? output.size: undefined,
-                height: height > width ? output.size: undefined,
+                width: width >= height ? output.size: undefined,
+                height: height >= width ? output.size: undefined,
               })
               .toFile(output.file)
           )
